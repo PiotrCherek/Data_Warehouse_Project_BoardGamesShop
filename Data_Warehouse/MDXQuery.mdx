@@ -1,0 +1,71 @@
+-- What is the impact of the prize pool on the number of participants in 2024?
+SELECT
+{[Measures].[Average number of tournament participants]} ON COLUMNS,
+{Order([Junk].[Prize Pool].Members, [Measures].[Average number of tournament participants], DESC)} ON ROWS
+FROM Warehouse
+WHERE ([Date].[Year].[2024]);
+
+-- What is the maximum amount of participants per each entry fee?
+WITH 
+MEMBER [Measures].[Max participants per Entry Fee] AS 
+    Max(([Tournament Organization].[Tournament ID].[Tournament ID].Members,
+        [Junk].[Entry Fee].CurrentMember),
+        [Measures].[Number of participants])
+SELECT
+{[Measures].[Max participants per Entry Fee]} ON COLUMNS,
+{[Junk].[Entry Fee].[Entry Fee].Members} ON ROWS
+FROM Warehouse;
+
+
+-- What is the impact of the number of places with money reward on the number of participants?
+SELECT
+{[Measures].[Average number of tournament participants]} ON COLUMNS,
+{Order([Junk].[Number Of Winning Places].Members, [Measures].[Average number of tournament participants], DESC)} ON ROWS
+FROM Warehouse;
+
+-- 10 most popular games during summer holidays
+SELECT
+{[Measures].[Average number of tournament participants]} ON COLUMNS,
+{TopCount([Board Game].[Game Name].Members, 10, [Measures].[Average number of tournament participants])} ON ROWS
+FROM Warehouse
+WHERE {[Date].[Month].[July], [Date].[Month].[August]};
+
+-- What day of the week is the best for tournament organization?
+SELECT
+{[Measures].[Average number of tournament participants]} ON COLUMNS,
+{Order([Date].[Day Of Week].Members, [Measures].[Average number of tournament participants], DESC)} ON ROWS
+FROM Warehouse;
+
+-- Are tournaments with free snacks and drinks more popular?
+SELECT
+{[Measures].[Average number of tournament participants]} ON COLUMNS,
+{Order([Additional Info].[Snack And Drinks].Members, [Measures].[Average number of tournament participants], DESC)} ON ROWS
+FROM Warehouse;
+
+-- Are tournaments only for adult players less popular?
+SELECT
+{[Measures].[Average number of tournament participants]} ON COLUMNS,
+{Order([Additional Info].[Bringing Children].Members, [Measures].[Average number of tournament participants], DESC)} ON ROWS
+FROM Warehouse;
+
+-- Does the time of tournament (morning/evening) influence the attendance?
+SELECT
+{[Measures].[Average number of tournament participants]} ON COLUMNS,
+{Order([Additional Info].[Meeting Time].Members, [Measures].[Average number of tournament participants], DESC)} ON ROWS
+FROM Warehouse;
+
+-- What age group is the biggest number of tournament players?
+SELECT
+{[Measures].[Number of unique participants]} ON COLUMNS,
+{Order([Customer].[Age Group].Members, [Measures].[Number of unique participants], DESC)} ON ROWS
+FROM Warehouse;
+
+-- Average number of tournaments and difference between previous year
+WITH
+	MEMBER [Measures].[Average number of participants Diff] AS
+	'([Date].[Year].CurrentMember, [Measures].[Average number of tournament participants]) -
+	 ([Date].[Year].PrevMember, [Measures].[Average number of tournament participants])'
+SELECT
+{[Measures].[Average number of tournament participants], [Measures].[Average number of participants Diff]} ON COLUMNS,
+{[Date].[Year].[2024], [Date].[Year].[2025]} ON ROWS
+FROM Warehouse;
