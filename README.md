@@ -14,7 +14,7 @@ This project fully covers everything from:
 - **Power BI** – data visualization and dashboards
 - **Bulk file generator** – automated data population for the transactional DB
 ## ERD
-![ERD Diagram]()
+![ERD Diagram](Docs/ERD_diagram.png)
 ## KPIs and Analytical Queries
 KPIs:
 1. 2% month-over-month increase in the number of customers taking part in our tournaments compared to the previous month.
