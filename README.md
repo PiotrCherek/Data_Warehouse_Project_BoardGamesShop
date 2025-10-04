@@ -25,6 +25,6 @@ Examples of business questions solved with the warehouse:
 - Are tournaments on weekends more popular?  
 - Does the time of day (morning/evening) influence attendance?
 ## PowerBI dashboards
-![Dashboard1](reports/screenshots/dashboard1.png)
-![Dashboard1](reports/screenshots/dashboard2.png)
-![Dashboard1](reports/screenshots/dashboard3.png)
+![Dashboard1](Reports/Screenshots/Dashboard1.png)
+![Dashboard2](Reports/Screenshots/Dashboard2.png)
+![Dashboard3](Reports/Screenshots/Dashboard3.png)
